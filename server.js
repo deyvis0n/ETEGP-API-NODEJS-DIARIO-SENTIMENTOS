@@ -5,7 +5,7 @@ const app = express()
 require('dotenv-safe').config()
 
 var corsOptions = {
-    origin: 'http://localhost8081'
+    origin: 'http://localhost:8081'
 }
 
 app.use(cors(corsOptions))
@@ -20,6 +20,7 @@ app.get('/', (req, res) => {
 })
 
 require('./app/routes/auth.routes')(app)
+require('./app/routes/user.routes')(app)
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

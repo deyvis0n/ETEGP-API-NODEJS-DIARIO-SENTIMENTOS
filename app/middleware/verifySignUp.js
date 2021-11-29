@@ -11,7 +11,7 @@ checkDuplicateUsername = (req, res, next) => {
         }
 
         if (user) {
-            res.status(400).send({ message: 'Falha! nick já em uso!' })
+            res.status(400).send({ message: 'Nome de usuario já em uso!' })
             return
         }
 
@@ -29,7 +29,7 @@ checkDuplicateEmail = (req, res, next) => {
         }
 
         if (user) {
-            res.status(400).send({ message: 'Falha! email já cadastrado' })
+            res.status(400).send({ message: 'Email já cadastrado!' })
             return
         }
 

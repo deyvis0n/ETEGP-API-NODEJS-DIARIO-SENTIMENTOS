@@ -6,5 +6,6 @@ const db = {}
 db.mongoose = mongoose
 
 db.user = require('./user.model')
+db.userPost = require('./userPost.model')
 
 module.exports = db
