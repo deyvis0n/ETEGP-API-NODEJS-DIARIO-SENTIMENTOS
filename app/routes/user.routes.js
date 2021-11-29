@@ -11,14 +11,22 @@ module.exports = function(app) {
         next()
     })
 
-    app.get('/api/user/all', controller.allAccess)
+    app.get('/api/user/getRecentPosts', 
+    [ authJwt.verifyToken ],
+    controller.recentPosts)
     app.post(
         '/api/user/postMessage', 
         [ authJwt.verifyToken ],
         controller.userPost
         )
-    app.get('/api/user/getUserPost',
+    app.get(
+        '/api/user/getUserPost',
         [ authJwt.verifyToken ],
         controller.userGetPost
+    )
+    app.post(
+        '/api/user/deleteUserPost',
+        [ authJwt.verifyToken ],
+        controller.userDeletePost
     )
 }

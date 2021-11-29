@@ -8,6 +8,10 @@ const User = mongoose.model(
             required: true,
             ref: 'User'
         },
+        username: {
+            type: String,
+            required: true
+        },
         userMessage: {
             type: String,
             require: true

@@ -2,13 +2,16 @@ const db = require('../models')
 const UserPost = db.userPost
 const User = db.user
 
-exports.allAccess = (req, res) => {
-    res.status(200).send('Conteudo Publico')
+exports.recentPosts = async (req, res) => {
+    const allPost = await (await UserPost.find().select(['username', 'userMessage', 'createOn'])).reverse()
+
+    res.status(200).send(allPost)
 }
 
 exports.userPost = (req, res) => {
     const userPost = new UserPost({
         user: req.userId,
+        username: req.body.username,
         userMessage: req.body.userMessage,
         createOn: new Date()
     })
@@ -23,7 +26,17 @@ exports.userPost = (req, res) => {
 }
 
 exports.userGetPost = async (req, res) => {
-    userValue = (await UserPost.find({ 'user': req.userId }).select(['user', 'userMessage','createOn'])).reverse()
+    const userValue = (await UserPost.find({ 'user': req.userId }).select(['username', 'userMessage','createOn'])).reverse()
 
     res.status(200).send(userValue)
+}
+
+exports.userDeletePost = (req, res) => {
+    UserPost.deleteOne({ _id: req.body._id }).exec((err) => {
+        if (err) {
+            return res.status(500).send({ message: err })
+        }
+
+        return res.status(200).send({ message: 'Postagem apagada com sucesso!'})
+    })
 }
