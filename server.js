@@ -5,7 +5,7 @@ const app = express()
 require('dotenv-safe').config()
 
 var corsOptions = {
-    origin: 'http://localhost:8081'
+    origin: process.env.ORIGIN_URL
 }
 
 app.use(cors(corsOptions))
