@@ -3,7 +3,7 @@ const UserPost = db.userPost
 const User = db.user
 
 exports.recentPosts = async (req, res) => {
-    const allPost = await (await UserPost.find().select(['username', 'userMessage', 'createOn'])).reverse()
+    const allPost = await (await UserPost.find().sort({ createOn:-1 }).limit(10).select(['username', 'userMessage', 'createOn']))
 
     res.status(200).send(allPost)
 }
@@ -26,9 +26,11 @@ exports.userPost = (req, res) => {
 }
 
 exports.userGetPost = async (req, res) => {
-    const userValue = (await UserPost.find({ 'user': req.userId }).select(['username', 'userMessage','createOn'])).reverse()
+    await UserPost.find({ 'user': req.userId }).sort({ createOn:-1 }).select(['username', 'userMessage','createOn']).then(user => {
+        
+        res.status(200).send(user)
 
-    res.status(200).send(userValue)
+    })
 }
 
 exports.userDeletePost = (req, res) => {
